@@ -26,7 +26,7 @@ class Program
         var encodeOptions = new EncodeOptions()
         {
             InputFile = args[0],
-            OutputDir = args.Length > 1 ? args[1] : Path.Combine(inputFile.DirectoryName ?? "", Path.GetFileNameWithoutExtension(inputFile.Name)),
+            OutputDir = args.Length > 1 ? Path.Combine(args[1], Path.GetFileNameWithoutExtension(inputFile.Name)) : Path.Combine(inputFile.DirectoryName ?? "", Path.GetFileNameWithoutExtension(inputFile.Name)),
         };
 
         var host = Host.CreateDefaultBuilder(args)
