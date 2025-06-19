@@ -2,7 +2,7 @@
 
 public class EncodeOptions
 {
-    public string InputFile { get; set; } = default!;
+    public IList<string> InputFiles { get; set; } = [];
 
     public string OutputDir { get; set; } = default!;
 }

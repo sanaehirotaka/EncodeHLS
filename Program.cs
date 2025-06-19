@@ -9,24 +9,17 @@ class Program
     static async Task Main(string[] args)
     {
         // Check for input file and output directory from command line
-        if (args.Length == 0 || string.IsNullOrEmpty(args[0]) || args[0].StartsWith("-"))
+        if (args.Length <= 1)
         {
             Console.WriteLine("Error: Please provide the input video file path as the first argument.");
-            Console.WriteLine("Usage: EncodeHLS.exe <path_to_video_file> [output_directory]");
-            return;
-        }
-        var inputFilePath = args[0];
-        var inputFile = new FileInfo(inputFilePath);
-        if (!inputFile.Exists)
-        {
-            Console.WriteLine($"Error: Input file not found at '{inputFilePath}'");
+            Console.WriteLine("Usage: EncodeHLS.exe <output_directory> <path_to_video_file>[...<path_to_video_file>]");
             return;
         }
 
         var encodeOptions = new EncodeOptions()
         {
-            InputFile = args[0],
-            OutputDir = args.Length > 1 ? Path.Combine(args[1], Path.GetFileNameWithoutExtension(inputFile.Name)) : Path.Combine(inputFile.DirectoryName ?? "", Path.GetFileNameWithoutExtension(inputFile.Name)),
+            InputFiles = [.. args.Skip(1)],
+            OutputDir = args[0],
         };
 
         var host = Host.CreateDefaultBuilder(args)
